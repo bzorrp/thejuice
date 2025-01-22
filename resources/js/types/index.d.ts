@@ -1,8 +1,25 @@
 export interface User {
     id: number;
     name: string;
+    username: string;
+    wallet_balance: number;
     email: string;
     email_verified_at?: string;
+}
+
+type Juice = {
+    id: number;
+    name: string;
+    price: number;
+}
+
+type Cart = {
+    id: number;
+    items?: {
+        id: number;
+        juice: Juice;
+        quantity: number;
+    }[]
 }
 
 export type PageProps<
@@ -11,4 +28,5 @@ export type PageProps<
     auth: {
         user: User;
     };
+    cart: Cart;
 };

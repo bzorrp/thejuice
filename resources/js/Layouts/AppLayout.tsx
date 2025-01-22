@@ -5,7 +5,9 @@ import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link, usePage } from '@inertiajs/react';
 import { PropsWithChildren, ReactNode, useState } from 'react';
 
-export default function Authenticated({
+// TODO: cart page, add to cart, remove from cart, add to favorites, checkout page
+
+export default function App({
     header,
     children,
 }: PropsWithChildren<{ header?: ReactNode }>) {
@@ -20,24 +22,28 @@ export default function Authenticated({
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div className="flex h-16 justify-between">
                         <div className="flex">
-                            <div className="flex shrink-0 items-center">
-                                <Link href="/">
-                                    <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
-                                </Link>
-                            </div>
-
-                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                            <div className="hidden space-x-8 sm:-my-px sm:flex">
                                 <NavLink
-                                    href={route('dashboard')}
-                                    active={route().current('dashboard')}
+                                    href={route('home')}
+                                    active={route().current('home')}
                                 >
-                                    Dashboard
+                                    Home
                                 </NavLink>
                             </div>
                         </div>
 
                         <div className="hidden sm:ms-6 sm:flex sm:items-center">
-                            <div className="relative ms-3">
+                            {!user && <div className="flex gap-4">
+                                <NavLink href={ route('login') } className="mr-8" active={false}>
+                                    Log in
+                                </NavLink>
+
+                                <NavLink href={ route('register') } active={false}>
+                                    Register
+                                </NavLink>
+                            </div>}
+
+                            {user && <div className="relative ms-3">
                                 <Dropdown>
                                     <Dropdown.Trigger>
                                         <span className="inline-flex rounded-md">
@@ -70,6 +76,11 @@ export default function Authenticated({
                                             Profile
                                         </Dropdown.Link>
                                         <Dropdown.Link
+                                            href={route('cart.show')}
+                                        >
+                                            Cart
+                                        </Dropdown.Link>
+                                        <Dropdown.Link
                                             href={route('profile.edit')}
                                         >
                                             Profile Settings
@@ -83,7 +94,7 @@ export default function Authenticated({
                                         </Dropdown.Link>
                                     </Dropdown.Content>
                                 </Dropdown>
-                            </div>
+                            </div>}
                         </div>
 
                         <div className="-me-2 flex items-center sm:hidden">
@@ -137,14 +148,27 @@ export default function Authenticated({
                 >
                     <div className="space-y-1 pb-3 pt-2">
                         <ResponsiveNavLink
-                            href={route('dashboard')}
-                            active={route().current('dashboard')}
+                            href={route('home')}
+                            active={route().current('home')}
                         >
-                            Dashboard
+                            Home
                         </ResponsiveNavLink>
                     </div>
 
-                    <div className="border-t border-gray-200 pb-1 pt-4 dark:border-gray-600">
+                        { !user && <div className="space-y-1 pb-3 pt-2">
+                            <ResponsiveNavLink href={route('login')}>
+                                Login
+                            </ResponsiveNavLink>
+                            <ResponsiveNavLink
+                                method="post"
+                                href={route('register')}
+                                as="button"
+                            >
+                                Register
+                            </ResponsiveNavLink>
+                        </div> }
+
+                    { user && <div className="border-t border-gray-200 pb-1 pt-4 dark:border-gray-600">
                         <div className="px-4">
                             <div className="text-base font-medium text-gray-800 dark:text-gray-200">
                                 {user.name}
@@ -158,6 +182,9 @@ export default function Authenticated({
                             <ResponsiveNavLink href={route('profile.show')}>
                                 Profile
                             </ResponsiveNavLink>
+                            <ResponsiveNavLink href={route('cart.show')}>
+                                Cart
+                            </ResponsiveNavLink>
                             <ResponsiveNavLink href={route('profile.edit')}>
                                 Profile Settings
                             </ResponsiveNavLink>
@@ -169,7 +196,7 @@ export default function Authenticated({
                                 Log Out
                             </ResponsiveNavLink>
                         </div>
-                    </div>
+                    </div> }
                 </div>
             </nav>
 

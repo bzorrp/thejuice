@@ -2,6 +2,8 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Cart;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -34,6 +36,20 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $request->user(),
             ],
+            'cart' => function () use ($request) {
+                /* @var User $user */
+                $user = $request->user();
+                if ($user === null) {
+                    return null;
+                }
+
+                $cart = $user->cart()->with('items.juice')->first();
+                if ($cart === null) {
+                    $cart = Cart::query()->create();
+                }
+
+                return $cart;
+            }
         ];
     }
 }
