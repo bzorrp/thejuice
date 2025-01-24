@@ -14,7 +14,7 @@ class HandleInertiaRequests extends Middleware
      *
      * @var string
      */
-    protected $rootView = 'app';
+    protected $rootView = "app";
 
     /**
      * Determine the current asset version.
@@ -33,23 +33,32 @@ class HandleInertiaRequests extends Middleware
     {
         return [
             ...parent::share($request),
-            'auth' => [
-                'user' => $request->user(),
+            "auth" => [
+                "user" => function () use ($request) {
+                    /* @var User $user */
+                    $user = $request->user();
+
+                    if ($user) {
+                        $user->load(["orders.items.juice", "favorites"]);
+                    }
+
+                    return $user;
+                },
             ],
-            'cart' => function () use ($request) {
+            "cart" => function () use ($request) {
                 /* @var User $user */
                 $user = $request->user();
                 if ($user === null) {
                     return null;
                 }
 
-                $cart = $user->cart()->with('items.juice')->first();
+                $cart = $user->cart()->with("items.juice")->first();
                 if ($cart === null) {
-                    $cart = Cart::query()->create();
+                    $cart = $user->cart()->create();
                 }
 
                 return $cart;
-            }
+            },
         ];
     }
 }

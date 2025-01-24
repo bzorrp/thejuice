@@ -1,20 +1,35 @@
-import { PageProps } from '@/types';
-import { Head } from '@inertiajs/react';
-import DeleteUserForm from './Partials/DeleteUserForm';
-import UpdatePasswordForm from './Partials/UpdatePasswordForm';
-import UpdateProfileInformationForm from './Partials/UpdateProfileInformationForm';
-import AppLayout from '@/Layouts/AppLayout';
+import type { PageProps } from "@/types";
+import { Head, usePage } from "@inertiajs/react";
+import DeleteUserForm from "./Partials/DeleteUserForm";
+import UpdatePasswordForm from "./Partials/UpdatePasswordForm";
+import UpdateProfileInformationForm from "./Partials/UpdateProfileInformationForm";
+import AppLayout from "@/Layouts/AppLayout";
 
 export default function Edit({
     mustVerifyEmail,
     status,
 }: PageProps<{ mustVerifyEmail: boolean; status?: string }>) {
+    const user = usePage().props.auth.user;
+
     return (
         <AppLayout
             header={
-                <h2 className="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
-                    Profile Settings
-                </h2>
+                <div className="flex justify-between items-center">
+                    <h2 className="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
+                        Profile
+                    </h2>
+                    <div className="flex gap-4">
+                        <p className="font-semibold text-gray-900 dark:text-gray-100">
+                            Orders: {user.orders?.length || 0}
+                        </p>
+                        <p className="font-semibold text-gray-900 dark:text-gray-100">
+                            Wallet: NGN&nbsp;
+                            {Number.parseFloat(
+                                user.wallet_balance.toString(),
+                            ).toLocaleString()}
+                        </p>
+                    </div>
+                </div>
             }
         >
             <Head title="Profile Settings" />

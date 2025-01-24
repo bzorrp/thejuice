@@ -18,23 +18,39 @@ class DatabaseSeeder extends Seeder
 
         // Juice types
         $juice_types = [
-            'Orange Juice', 'Apple Juice', 'Mango Juice', 'Carrot Juice',
-            'Watermelon Juice', 'Pineapple Juice', 'Grape Juice',
-            'Cranberry Juice', 'Tomato Juice', 'Pomegranate Juice', 'Guava Juice',
-            'Lychee Juice', 'Coconut Water', 'Blackberry Juice', 'Blackberry Juice',
-            'Kiwi Juice', 'Cucumber-Mint Juice', 'Dragon Fruit Juice', 'Fig Juice',
-            'Starfruit Juice', 'Pear-Ginger Juice', 'Lemon-mint Juice',
+            "Orange Juice",
+            "Apple Juice",
+            "Mango Juice",
+            "Carrot Juice",
+            "Watermelon Juice",
+            "Pineapple Juice",
+            "Grape Juice",
+            "Cranberry Juice",
+            "Tomato Juice",
+            "Pomegranate Juice",
+            "Guava Juice",
+            "Lychee Juice",
+            "Coconut Water",
+            "Blackberry Juice",
+            "Blackberry Juice",
+            "Kiwi Juice",
+            "Cucumber-Mint Juice",
+            "Dragon Fruit Juice",
+            "Fig Juice",
+            "Starfruit Juice",
+            "Pear-Ginger Juice",
+            "Lemon-mint Juice",
         ];
 
         $juices = collect([]);
         foreach ($juice_types as $juice_type) {
             $juices->push([
-                'name' => $juice_type,
-                'price' => fake()->unique()->numberBetween(100, 5000),
-                'description' => fake()->paragraph(20),
+                "name" => $juice_type,
+                "price" => fake()->unique()->numberBetween(100, 500),
+                "description" => fake()->paragraph(20),
             ]);
         }
 
-        DB::table('juices')->insertOrIgnore($juices->toArray());
+        DB::table("juices")->insertOrIgnore($juices->toArray());
     }
 }
