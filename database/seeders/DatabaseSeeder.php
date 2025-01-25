@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory(10)->create();
+        // User::factory(10)->create();
 
         // Juice types
         $juice_types = [
@@ -46,8 +46,8 @@ class DatabaseSeeder extends Seeder
         foreach ($juice_types as $juice_type) {
             $juices->push([
                 "name" => $juice_type,
-                "price" => fake()->unique()->numberBetween(100, 500),
-                "description" => fake()->paragraph(20),
+                "price" => random_int(100, 1000),
+                "description" => "This is a fruit juice",
             ]);
         }
 
