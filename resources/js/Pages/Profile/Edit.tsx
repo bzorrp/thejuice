@@ -23,10 +23,7 @@ export default function Edit({
                             Orders: {user?.orders?.length || 0}
                         </p>
                         <p className="font-semibold text-gray-900 dark:text-gray-100">
-                            Wallet: NGN&nbsp;
-                            {Number.parseFloat(
-                                user?.wallet_balance.toString(),
-                            ).toLocaleString()}
+                            Wallet: NGN&nbsp;{user?.wallet_balance || 0}
                         </p>
                     </div>
                 </div>
