@@ -1,5 +1,7 @@
 FROM richarvey/nginx-php-fpm:3.1.6
 
+RUN apk add --no-cache nodejs npm
+
 COPY . .
 
 # Image config
