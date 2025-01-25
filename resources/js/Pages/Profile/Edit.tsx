@@ -20,12 +20,12 @@ export default function Edit({
                     </h2>
                     <div className="flex gap-4">
                         <p className="font-semibold text-gray-900 dark:text-gray-100">
-                            Orders: {user.orders?.length || 0}
+                            Orders: {user?.orders?.length || 0}
                         </p>
                         <p className="font-semibold text-gray-900 dark:text-gray-100">
                             Wallet: NGN&nbsp;
                             {Number.parseFloat(
-                                user.wallet_balance.toString(),
+                                user?.wallet_balance.toString(),
                             ).toLocaleString()}
                         </p>
                     </div>
