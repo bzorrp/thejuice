@@ -111,16 +111,16 @@ export default function Show() {
                                     <div className="bg-white p-4 shadow sm:rounded-lg sm:p-8 dark:bg-gray-800 flex gap-4">
                                         <div className="w-24">
                                             <img
-                                                src="/juice-image.jpg"
-                                                alt="avatar"
-                                                className="w-full"
+                                                src={item.juice.image ? `/juices/${item.juice.image}` : "/default-juice.jpg"}
+                                                alt={item.juice.name}
+                                                className="w-full object-cover rounded-lg"
                                             />
                                         </div>
                                         <div className="flex flex-col gap-4">
                                             <p className="text-xl font-bold text-gray-500 dark:text-gray-300">
                                                 {item.juice.name}
                                             </p>
-                                            <div className="flex gap-4">
+                                            <div className="flex flex-wrap gap-4">
                                                 <input
                                                     type="number"
                                                     min={0}
@@ -130,29 +130,30 @@ export default function Show() {
                                                     onChange={(event) =>
                                                         updateCart(
                                                             item.juice.id,
-                                                            event.target
-                                                                .valueAsNumber,
+                                                            event.target.valueAsNumber
                                                         )
                                                     }
+                                                    className="border px-2 py-1 rounded"
                                                 />
-                                                {juiceInFavorites(
-                                                    item.juice.id,
-                                                ) ? (
+                                                <DangerButton
+                                                    onClick={() =>
+                                                        updateCart(item.juice.id, 0)
+                                                    }
+                                                >
+                                                    Remove from Cart
+                                                </DangerButton>
+                                                {juiceInFavorites(item.juice.id) ? (
                                                     <DangerButton
                                                         onClick={() =>
-                                                            removeFromFavorites(
-                                                                item.juice.id,
-                                                            )
+                                                            removeFromFavorites(item.juice.id)
                                                         }
                                                     >
-                                                        Remove from favorites
+                                                        Remove from Favorites
                                                     </DangerButton>
                                                 ) : (
                                                     <PrimaryButton
                                                         onClick={() =>
-                                                            addToFavorites(
-                                                                item.juice.id,
-                                                            )
+                                                            addToFavorites(item.juice.id)
                                                         }
                                                     >
                                                         Save To Favorites
@@ -174,8 +175,7 @@ export default function Show() {
                                         {items
                                             .map(
                                                 (item) =>
-                                                    item.juice.price *
-                                                    item.quantity,
+                                                    item.juice.price * item.quantity
                                             )
                                             .reduce((a, b) => a + b)
                                             .toLocaleString()}
@@ -194,7 +194,6 @@ export default function Show() {
                                             htmlFor="address"
                                             value="Address"
                                         />
-
                                         <TextInput
                                             id="address"
                                             className="mt-1 block w-full"
@@ -202,14 +201,13 @@ export default function Show() {
                                             onChange={(e) =>
                                                 form.setData(
                                                     "address",
-                                                    e.target.value,
+                                                    e.target.value
                                                 )
                                             }
                                             required
                                             isFocused
                                             autoComplete="address"
                                         />
-
                                         <InputError
                                             className="mt-2"
                                             message={form.errors.address}
@@ -221,7 +219,6 @@ export default function Show() {
                                             htmlFor="phonenumber"
                                             value="Phonenumber"
                                         />
-
                                         <TextInput
                                             id="phonenumber"
                                             className="mt-1 block w-full"
@@ -229,14 +226,13 @@ export default function Show() {
                                             onChange={(e) =>
                                                 form.setData(
                                                     "phonenumber",
-                                                    e.target.value,
+                                                    e.target.value
                                                 )
                                             }
                                             required
                                             isFocused
                                             autoComplete="phonenumber"
                                         />
-
                                         <InputError
                                             className="mt-2"
                                             message={form.errors.phonenumber}
@@ -254,11 +250,18 @@ export default function Show() {
                     </div>
                 </div>
             ) : (
-                <div className="w-full flex justify-center items-center py-12">
-                    <p className="font-bold text-gray-500 dark:text-gray-300">
-                        Nothing to see here
-                    </p>
-                </div>
+<div className="w-full flex flex-col justify-center items-center py-12">
+    <img
+        src="https://media.giphy.com/media/jWexOOlYe241y/giphy.gif"
+        alt="Sad cat"
+        className="w-48 h-48 object-cover rounded-lg"
+    />
+    <p className="font-bold text-gray-500 dark:text-gray-300 text-lg mt-4">
+        Oh no! Your cart is empty... even the cat is sad 😿
+    </p>
+
+</div>
+
             )}
         </AppLayout>
     );

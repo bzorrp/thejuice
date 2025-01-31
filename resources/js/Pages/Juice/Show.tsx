@@ -5,9 +5,45 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import { useState } from "react";
 import DangerButton from "@/Components/DangerButton";
 
+const nutritionFacts: Record<string, any> = {
+    "Orange Juice": { calories: 112, carbs: 26, sugars: 21, protein: 2, fat: 0.5, fiber: 0.5, vitamins: "High in Vitamin C, folate, potassium" },
+    "Apple Juice": { calories: 114, carbs: 28, sugars: 24, protein: 0.5, fat: 0.3, fiber: 0.5, vitamins: "Contains Vitamin C, potassium" },
+    "Mango Juice": { calories: 110, carbs: 26, sugars: 21, protein: 1.5, fat: 0.5, fiber: 0.5, vitamins: "High in Vitamin C, small amounts of folate, potassium, thiamine" },
+    "Carrot Juice": { calories: 94, carbs: 22, sugars: 19, protein: 2, fat: 0.3, fiber: 2.2, vitamins: "High in Vitamin A, beta-carotene, potassium" },
+    "Watermelon Juice": { calories: 80, carbs: 21, sugars: 20, protein: 1, fat: 0.2, fiber: 0.5, vitamins: "High in Vitamin C, lycopene" },
+    "Pineapple Juice": { calories: 132, carbs: 32, sugars: 25, protein: 1, fat: 0.3, fiber: 1, vitamins: "High in Vitamin C, manganese" },
+    "Grape Juice": { calories: 150, carbs: 38, sugars: 36, protein: 1, fat: 0.2, fiber: 0.3, vitamins: "Contains Vitamin C, potassium, resveratrol" },
+    "Cranberry Juice": { calories: 116, carbs: 31, sugars: 12, protein: 0.3, fat: 0.1, fiber: 0.3, vitamins: "High in Vitamin C, antioxidants" },
+    "Tomato Juice": { calories: 40, carbs: 9, sugars: 6, protein: 2, fat: 0.2, fiber: 1, vitamins: "High in Vitamin C, lycopene" },
+    "Pomegranate Juice": { calories: 134, carbs: 33, sugars: 31, protein: 0.4, fat: 0.3, fiber: 0.2, vitamins: "High in Vitamin C, antioxidants" },
+    "Guava Juice": { calories: 112, carbs: 28, sugars: 18, protein: 2.4, fat: 0.7, fiber: 3, vitamins: "Very high in Vitamin C, folate, potassium" },
+    "Lychee Juice": { calories: 125, carbs: 31, sugars: 29, protein: 0.8, fat: 0.3, fiber: 0.4, vitamins: "High in Vitamin C, antioxidants" },
+    "Blackberry Juice": { calories: 90, carbs: 25, sugars: 12, protein: 2, fat: 0.5, fiber: 8, vitamins: "High in Vitamin C, manganese" },
+    "Kiwi Juice": { calories: 110, carbs: 27, sugars: 20, protein: 1.2, fat: 0.4, fiber: 5, vitamins: "High in Vitamin C, Vitamin K" },
+    "Cucumber-Mint Juice": { calories: 30, carbs: 7, sugars: 4, protein: 1, fat: 0.1, fiber: 0.8, vitamins: "Hydrating, contains Vitamin K and antioxidants" },
+    "Dragon Fruit Juice": { calories: 102, carbs: 25, sugars: 18, protein: 2, fat: 0.5, fiber: 3, vitamins: "High in Vitamin C, magnesium" },
+    "Fig Juice": { calories: 140, carbs: 36, sugars: 32, protein: 1, fat: 0.3, fiber: 2.5, vitamins: "Rich in fiber, iron, and antioxidants" },
+    "Starfruit Juice": { calories: 60, carbs: 14, sugars: 10, protein: 1, fat: 0.3, fiber: 3, vitamins: "High in Vitamin C, fiber" },
+    "Pear-Ginger Juice": { calories: 120, carbs: 30, sugars: 25, protein: 1, fat: 0.3, fiber: 2, vitamins: "Contains Vitamin C, fiber, antioxidants from ginger" },
+    "Lemon-mint Juice": { calories: 35, carbs: 9, sugars: 5, protein: 0.4, fat: 0.1, fiber: 1, vitamins: "High in Vitamin C, refreshing with antioxidants" },
+    "Coconut Water": { calories: 45, carbs: 10, sugars: 7, protein: 0.5, fat: 0, fiber: 0, vitamins: "High in potassium, hydrating electrolytes" }
+};
+
+
 export default function Show({ juice }: { juice: Juice }) {
     const user = usePage().props.auth.user;
     const cart = usePage().props.cart;
+
+    const nutrition = nutritionFacts[juice.name.trim()] || {
+        calories: "N/A",
+        carbs: "N/A",
+        sugars: "N/A",
+        protein: "N/A",
+        fat: "N/A",
+        fiber: "N/A",
+        vitamins: "N/A",
+    };
+    
 
     const juiceInCart = cart?.items?.find((item) => item.juice.id === juice.id);
     const juiceInFavorites = user?.favorites?.find(
@@ -87,11 +123,12 @@ export default function Show({ juice }: { juice: Juice }) {
                 <div className="mx-auto max-w-7xl space-y-6 sm:px-6 lg:px-8">
                     <div className="bg-white p-4 shadow sm:rounded-lg sm:p-8 dark:bg-gray-800 flex gap-4">
                         <div className="w-64">
-                            <img
-                                src="/juice-image.jpg"
-                                alt="avatar"
-                                className="w-full"
-                            />
+                        <img
+    src={`/juices/${juice.image}`}
+    alt={juice.name}
+    className="w-full object-cover rounded-lg"
+/>
+
                         </div>
                         <div className="flex flex-col">
                             <h1 className="text-2xl text-gray-900 dark:text-gray-100">
@@ -105,22 +142,14 @@ export default function Show({ juice }: { juice: Juice }) {
                                     Nutritional Information
                                 </h1>
                                 <div className="text-sm text-gray-500 dark:text-gray-300">
-                                    <ul className="list-disc px-4 font-semibold">
-                                        <li>
-                                            Calories (per 1 cup, 240ml): 110
-                                            kcal
-                                        </li>
-                                        <li>Carbohydrates: 26g</li>
-                                        <li>Sugars: 21g</li>
-                                        <li>Protein: 1.5g</li>
-                                        <li>Fat: 0.5g</li>
-                                        <li>Fiber: 0.5g</li>
-                                        <li>
-                                            Vitamins/Minerals: High in Vitamin C
-                                            (124% of daily value) Contains small
-                                            amounts of folate, potassium, and
-                                            thiamine.
-                                        </li>
+                                <ul className="list-disc px-4 font-semibold">
+                                        <li>Calories: {nutrition.calories} kcal</li>
+                                        <li>Carbohydrates: {nutrition.carbs}g</li>
+                                        <li>Sugars: {nutrition.sugars}g</li>
+                                        <li>Protein: {nutrition.protein}g</li>
+                                        <li>Fat: {nutrition.fat}g</li>
+                                        <li>Fiber: {nutrition.fiber}g</li>
+                                        <li>Vitamins/Minerals: {nutrition.vitamins}</li>
                                     </ul>
                                 </div>
                             </div>

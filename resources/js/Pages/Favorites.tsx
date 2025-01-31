@@ -43,11 +43,12 @@ export default function Edit({ favorites }: PageProps<{ favorites: Juice[] }>) {
                             key={favorite.id}
                         >
                             <div className="w-24">
-                                <img
-                                    src="/juice-image.jpg"
-                                    alt="avatar"
-                                    className="w-full"
-                                />
+                            <img
+    src={`/juices/${favorite.image}`}
+    alt={favorite.name}
+    className="w-full object-cover rounded-lg"
+/>
+
                             </div>
                             <div className="flex flex-col gap-4">
                                 <p className="text-xl font-bold text-gray-500 dark:text-gray-300">

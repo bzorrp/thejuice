@@ -25,7 +25,9 @@ type Juice = {
     id: number;
     name: string;
     price: number;
+    image?: string; // Optional in case some juices don't have images
 };
+
 
 type Cart = {
     id: number;

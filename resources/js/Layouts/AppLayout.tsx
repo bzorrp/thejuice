@@ -32,6 +32,10 @@ export default function App({
                             </div>
                         </div>
 
+                        <div className="flex items-center">
+                            <img src="/textlogo.png" alt="Logo" className="w-52 h-100" />
+                        </div>
+
                         <div className="hidden sm:ms-6 sm:flex sm:items-center">
                             {!user && (
                                 <div className="flex gap-4">
