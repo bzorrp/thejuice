@@ -1,0 +1,30 @@
+version: '3.8'
+services:
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    env_file:
+      - .env.docker  # Use the Docker-specific env file
+    volumes:
+      - .:/var/www/html  # Mount the current directory to the container (optional for local development)
+    networks:
+      - laravel_network  # Add this network to ensure communication between containers
+  db:
+    image: mysql:8
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ""  # The root password can be empty or set to your choice
+      MYSQL_DATABASE: juice
+      MYSQL_USER: root
+      MYSQL_PASSWORD: ""
+    ports:
+      - "3307:3306"
+    networks:
+      - laravel_network  # Make sure the database is part of the same network as the app
+
+networks:
+  laravel_network:
+    driver: bridge  # Use a bridge network for communication between app and db

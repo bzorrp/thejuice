@@ -2,7 +2,7 @@ FROM richarvey/nginx-php-fpm:3.1.6
 
 RUN apk add --no-cache nodejs npm
 
-COPY . .
+COPY . . 
 
 # Image config
 ENV SKIP_COMPOSER 1
@@ -19,4 +19,8 @@ ENV LOG_CHANNEL stderr
 # Allow composer to run as root
 ENV COMPOSER_ALLOW_SUPERUSER 1
 
+# Expose port 80 for Nginx
+EXPOSE 80
+
+# Ensure the Nginx service is running and set up the necessary environment for PHP-FPM
 CMD ["/start.sh"]
